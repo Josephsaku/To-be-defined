@@ -1,0 +1,19 @@
+{
+  "name": "to-be-defined",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "description": "待确认：2–3人局域网网页合作调查游戏",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node tests/game.mjs && node tests/annotations.mjs && node tests/sites.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Josephsaku/To-be-defined.git"
+  }
+}

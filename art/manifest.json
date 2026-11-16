@@ -1,0 +1,262 @@
+{
+  "mode": "authorized CLI/API",
+  "model": "gpt-image-2",
+  "quality": "per asset",
+  "assets": [
+    {
+      "file": "hall.jpg",
+      "master": "hall-base.png",
+      "quality": "medium",
+      "masterSize": [
+        1448,
+        1086
+      ],
+      "webSize": [
+        800,
+        600
+      ],
+      "bytes": 46370,
+      "sha256": "22e74d04d62949ee1ff2a2ebef355b449af22bd456f5e9f553a5189ffbcb3475"
+    },
+    {
+      "file": "stairs.jpg",
+      "master": "stairs-base.png",
+      "quality": "medium",
+      "masterSize": [
+        1448,
+        1086
+      ],
+      "webSize": [
+        800,
+        600
+      ],
+      "bytes": 50895,
+      "sha256": "6d5a482c6ca9b200269d26ff337ce3070d8d315b529741cbfb9bb86f121d8f4c"
+    },
+    {
+      "file": "loading.jpg",
+      "master": "loading-base.png",
+      "quality": "medium",
+      "masterSize": [
+        1448,
+        1086
+      ],
+      "webSize": [
+        800,
+        600
+      ],
+      "bytes": 60983,
+      "sha256": "d4e5364845fa58f88bc837539bf46d4c14056335433060228a3d3efd4fc5e3b3"
+    },
+    {
+      "file": "hall-change.jpg",
+      "master": "hall-changed.png",
+      "quality": "medium",
+      "masterSize": [
+        1448,
+        1086
+      ],
+      "webSize": [
+        800,
+        600
+      ],
+      "bytes": 46631,
+      "sha256": "6bc9f9fb162e79ece633452d367a6333d21236b1df290fbaffa461a5e05705db"
+    },
+    {
+      "file": "close-change.jpg",
+      "master": "close-changed.png",
+      "quality": "medium",
+      "masterSize": [
+        1448,
+        1086
+      ],
+      "webSize": [
+        800,
+        600
+      ],
+      "bytes": 47007,
+      "sha256": "8def5a0536ef733bf17bc3d845a06322fdec177b36e740ec79cf7cec326b802c"
+    },
+    {
+      "file": "repair-bench.jpg",
+      "master": "repair-bench.png",
+      "quality": "high",
+      "masterSize": [
+        1448,
+        1086
+      ],
+      "webSize": [
+        800,
+        600
+      ],
+      "bytes": 109707,
+      "sha256": "64886bd72955e86614643da35726aba9c71372ac4458e4098b83960aeca081eb"
+    },
+    {
+      "file": "archive-boxes.jpg",
+      "master": "archive-boxes.png",
+      "quality": "high",
+      "masterSize": [
+        1448,
+        1086
+      ],
+      "webSize": [
+        800,
+        600
+      ],
+      "bytes": 106660,
+      "sha256": "6a9bdd9fd35dcf121be9e2494f57eee25c1e7ba04edebe1627b0585794743f96"
+    },
+    {
+      "file": "depot-exterior.jpg",
+      "master": "depot-exterior.png",
+      "quality": "high",
+      "masterSize": [
+        1448,
+        1086
+      ],
+      "webSize": [
+        800,
+        600
+      ],
+      "bytes": 98133,
+      "sha256": "d1069eedcb702a25de3a4b62c5ed9b5709b504ae04419b5e42a86d542ba77bd5"
+    },
+    {
+      "file": "hall-detail.jpg",
+      "master": "hall-detail.png",
+      "quality": "high",
+      "masterSize": [
+        1448,
+        1086
+      ],
+      "webSize": [
+        800,
+        600
+      ],
+      "bytes": 74805,
+      "sha256": "2e3554905cd004fc2193636d0588584c205ac9177f64e70e6b34aa822ed4511d"
+    },
+    {
+      "file": "stairs-detail.jpg",
+      "master": "stairs-detail.png",
+      "quality": "high",
+      "masterSize": [
+        1448,
+        1086
+      ],
+      "webSize": [
+        800,
+        600
+      ],
+      "bytes": 77327,
+      "sha256": "79f8d275e9f4d460204a00f7345d250e82f5d9c94fe2e1526067f74df28636e6"
+    },
+    {
+      "file": "door-tape.jpg",
+      "master": "door-tape.png",
+      "quality": "high",
+      "masterSize": [
+        1448,
+        1086
+      ],
+      "webSize": [
+        800,
+        600
+      ],
+      "bytes": 82591,
+      "sha256": "cfcc67d84e3ca6215111b2d2c8b1b4ad8292ef81b875945a226f01b7c84d33a7"
+    },
+    {
+      "file": "stairs-changed.jpg",
+      "master": "stairs-changed.png",
+      "quality": "high",
+      "masterSize": [
+        1448,
+        1086
+      ],
+      "webSize": [
+        800,
+        600
+      ],
+      "bytes": 71778,
+      "sha256": "efcd0d59e5f5e044bfb16d226eb3fb828f58e4b217c16112c346b98d703aca71"
+    },
+    {
+      "file": "loading-changed.jpg",
+      "master": "loading-changed.png",
+      "quality": "high",
+      "masterSize": [
+        1448,
+        1086
+      ],
+      "webSize": [
+        800,
+        600
+      ],
+      "bytes": 93953,
+      "sha256": "3130bcf069073b5bf45d9f58a492634704b9ed9260fa1cf76f0eeb3aa28c2f67"
+    },
+    {
+      "file": "door-return.jpg",
+      "master": "door-return.png",
+      "quality": "high",
+      "masterSize": [
+        1448,
+        1086
+      ],
+      "webSize": [
+        800,
+        600
+      ],
+      "bytes": 80777,
+      "sha256": "fe0be948e9621671b54c8b6f262c907ead0fd913a56325863fabd33a9b070488"
+    },
+    {
+      "file": "shelf-witness.jpg",
+      "master": "shelf-witness.png",
+      "quality": "high",
+      "masterSize": [
+        1448,
+        1086
+      ],
+      "webSize": [
+        800,
+        600
+      ],
+      "bytes": 76250,
+      "sha256": "fd47f9ddade0f46401094da4b958dcebc77c8319941a409bae0b5c87d92efc77"
+    },
+    {
+      "file": "processing-room.jpg",
+      "master": "processing-room.png",
+      "quality": "high",
+      "masterSize": [
+        1448,
+        1086
+      ],
+      "webSize": [
+        800,
+        600
+      ],
+      "bytes": 115134,
+      "sha256": "f3d2a9e4e9a18062cc1e51f5296f30a396a49af4a9eefb5d3930106a8328f2c7"
+    },
+    {
+      "file": "sealed-bags.jpg",
+      "master": "sealed-bags.png",
+      "quality": "high",
+      "masterSize": [
+        1448,
+        1086
+      ],
+      "webSize": [
+        800,
+        600
+      ],
+      "bytes": 119934,
+      "sha256": "377372cdb8b0292c879f0536e645fa8c4a9b9e5d1b183d6175f017b5cb389d03"
+    }
+  ]
+}

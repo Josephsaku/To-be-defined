@@ -1,0 +1,39 @@
+a[data-doc],a[data-route],a[data-board]{cursor:pointer;color:var(--blue);text-decoration:none}
+a[data-doc]:hover,a[data-route]:hover,a[data-board]:hover{text-decoration:underline}
+.main-nav a{display:flex;align-items:center;padding:0 22px;color:white}
+.main-nav>span{margin-left:auto;align-self:center;color:#d6e1eb;font-size:11px;padding-right:14px}
+.board-tabs{gap:18px;flex-wrap:wrap}.board-tabs a[aria-current]{font-weight:bold;background:white;padding:3px 10px;border:1px solid #b8c8d7}
+.thread-subject a{font-size:13px;color:#214b72}.thread-row{min-height:58px;padding-top:11px;padding-bottom:11px}
+.related>a{display:block;margin:9px 0}.breadcrumb a{font-size:11px}
+.utility{background:#e4e6e9;border-color:#c8cbd0;color:#5c636d}.utility button{color:#59606b}
+.workbench-brand{max-width:1180px;margin:auto;display:flex;align-items:center;gap:22px;background:#fff;height:93px;padding:0 30px;border-bottom:4px solid #d08731}
+.workbench-brand strong{font:bold 31px Arial,"Microsoft YaHei",sans-serif;color:#383838}.workbench-brand strong span{background:#d88424;color:white;padding:3px 10px;font-style:italic;margin-right:8px}
+.workbench-brand small{color:#93918e;font-size:12px}.workbench-brand>div{margin-left:auto;font-size:12px;color:#81817f}
+.workbench-strip,.archive-strip{max-width:1180px;margin:auto;display:flex;align-items:center;gap:30px;padding:10px 28px;font-size:12px}
+.workbench-strip{background:#393b3e;color:#f0e3cd}.workbench-strip>span{color:#b7b9bc;font-size:11px}
+.site-back{margin-left:auto;font-size:11px;background:transparent;color:inherit;border:1px solid #ffffff33;padding:3px 10px}
+body.site-platform{background:#e8e8e6}.site-platform main{max-width:1100px}
+.record-document{border:1px solid #c8c8c1;background:#fff;margin-bottom:30px}.record-heading{padding:25px 32px 18px;border-bottom:1px solid #d8d8d3;background:#fafaf8}
+.record-heading>span{font-size:11px;color:#8b7048;letter-spacing:2px}.record-heading h1{font-size:23px;color:#3c3c36;font-weight:500;margin:8px 0 20px}
+.record-heading dl{display:flex;gap:38px;margin:0;font-size:11px;color:#7e817d}.record-heading dl>div{display:flex;gap:12px}.record-heading dd{margin:0;color:#4d555b}
+.record-body{padding:24px 32px 32px;max-width:1000px;margin:auto}.record-body>p{white-space:pre-wrap;font-size:14px;line-height:2;margin:12px 0 22px}
+.record-table{border-collapse:collapse;width:100%;margin:25px 0;font-size:12px;text-align:left}.record-table th{background:#efefeb;font-weight:normal;color:#73766e}.record-table th,.record-table td{padding:12px;border:1px solid #d4d7d2}.record-table tr:nth-child(even){background:#fafaf7}
+.document-attachments{margin-top:30px;border-top:1px solid #c8c9c2}.document-attachments h2{font-size:12px;color:#75786f;font-weight:normal;padding:14px 0;margin:0}
+.document-attachments>a{display:flex;align-items:center;gap:17px;padding:13px 15px;background:#f4f5f1;border-bottom:1px solid #dddeda;color:#4f666e;font-size:13px}.document-attachments>a>span{font:11px monospace;color:#98998f}.document-attachments>a>b{margin-left:auto}
+.record-bottom{font-size:10px;color:#999b94;padding:15px 30px;border-top:1px solid #e1e2db;text-align:right}
+.site-platform .label-task{background:white;border-color:#c5c8cc;margin:0;padding:18px}.site-platform .task-header{color:#62686e;border-color:#d4d7db}.site-platform .annotation-toolbar button{font-size:11px}
+.site-platform .document-form{background:#f7f6f2;border-color:#d5d1c7}.site-platform .main-button{background:#9b631e;border-color:#87581e}
+body.site-archive{background:#ddd9cf;color:#45493f}.archive-mast{max-width:1180px;margin:auto;display:flex;align-items:center;gap:24px;padding:29px 38px;background:#eae6db;border-bottom:4px double #828778}
+.archive-seal{width:61px;height:61px;border:3px double #75664d;display:grid;place-items:center;font:32px SimSun,serif;color:#75664d}.archive-mast small{font-size:11px;letter-spacing:3px;color:#797b6f}.archive-mast h1{font:32px SimSun,serif;letter-spacing:9px;margin:5px 0}.archive-mast p{font:11px SimSun,serif;color:#797b6f;margin:4px 0}.archive-mast>span{margin-left:auto;font:12px/2 SimSun,serif;color:#7f8276;text-align:right}
+.archive-strip{background:#757b6c;color:#f5f1e4}.site-archive main{max-width:1040px}.archive-document{background:#f9f6ed;border-color:#b9b8a9;box-shadow:3px 3px 0 #c8c6bb}.archive-document .record-heading{background:#f0ede2;border-color:#cfccbd}.archive-document .record-heading h1{font:25px/1.6 SimSun,serif}.archive-document .record-body>p{font-family:SimSun,"Microsoft YaHei",serif;line-height:2.2}.archive-document figure{background:#eeebdf;border-color:#cfccbd}.archive-document .document-form{background:#eeeadf;border-color:#c8c2b2}.archive-document .main-button{background:#6e7461;border-color:#5d6552}.archive-document .document-attachments>a{background:#eeebdf;color:#575f51}.archive-document .record-table th{background:#e7e3d7}
+body.site-mail{background:#e4e8eb}.mail-mast{max-width:1020px;margin:auto;background:#566d80;padding:24px 30px;color:white;display:flex;gap:30px;align-items:center}.mail-mast strong{font:23px SimSun,serif}.mail-mast span{font-size:12px}.site-mail main{max-width:960px}.mail-document .record-heading{background:#eaf0f4}.mail-document .record-body{max-width:800px}
+.credential-form{max-width:440px;margin:25px auto;padding:28px}.credential-form input{letter-spacing:1px}.account-receipt,.seal-receipt{padding:20px;border:1px solid #9fa295;background:#f2f3eb;font-size:13px}.seal-receipt b{font:18px monospace;letter-spacing:2px}
+body.case-negative{background:#08090a}
+.case-negative #site-chrome,.case-negative main,.case-negative #site-footer{filter:invert(1)}
+.case-negative .record-heading{border-top:5px solid #17b9ca}
+.case-negative .record-heading>span{color:#17aaba}
+.case-negative .record-body figure img{filter:invert(1)}
+.case-negative .record-table td:last-child{color:#159cab}
+.case-negative .record-table tr:last-child{border-bottom:3px solid #17b9ca}
+.case-negative .archive-strip{background:#c4b1a8;color:#242327}
+@media(max-width:800px){.main-nav>span,.workbench-brand small,.workbench-brand>div,.workbench-strip>span{display:none}.workbench-brand,.archive-mast{padding:20px}.workbench-strip,.archive-strip{margin:0 18px;padding:10px 15px}.record-heading,.record-body{padding:20px}.record-heading dl{flex-direction:column;gap:7px}.record-table{font-size:11px}.record-table td,.record-table th{padding:7px}.archive-mast>span{font-size:10px}.board-tabs{gap:11px}.mail-mast{padding:20px}.mail-mast span{display:none}}
