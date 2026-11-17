@@ -257,6 +257,54 @@
       ],
       "bytes": 119934,
       "sha256": "377372cdb8b0292c879f0536e645fa8c4a9b9e5d1b183d6175f017b5cb389d03"
+    },
+    {
+      "file": "ending-found.jpg",
+      "master": "ending-found.png",
+      "quality": "high",
+      "masterSize": [
+        1448,
+        1086
+      ],
+      "webSize": [
+        1280,
+        960
+      ],
+      "bytes": 208529,
+      "sha256": "21f598f6232c979b8b9a97325cb4633ed9a4d02e37e7d2f8757e1a004338bc7e",
+      "prompt": "art/prompts/endings.jsonl"
+    },
+    {
+      "file": "ending-substitute.jpg",
+      "master": "ending-substitute.png",
+      "quality": "high",
+      "masterSize": [
+        1448,
+        1086
+      ],
+      "webSize": [
+        1280,
+        960
+      ],
+      "bytes": 228260,
+      "sha256": "bc78daffc5b7fbae4a3cac2e3318456834bd09a9e4d9cbe5dc5f62e3e4daf917",
+      "prompt": "art/prompts/endings.jsonl"
+    },
+    {
+      "file": "ending-spread.jpg",
+      "master": "ending-spread.png",
+      "quality": "high",
+      "masterSize": [
+        1672,
+        941
+      ],
+      "webSize": [
+        1440,
+        810
+      ],
+      "bytes": 206493,
+      "sha256": "cf442a410064bbb5c72ad05cd35b43f9fbf5c347ec586aee280f949cad8b7f44",
+      "prompt": "art/prompts/endings.jsonl"
     }
   ]
 }

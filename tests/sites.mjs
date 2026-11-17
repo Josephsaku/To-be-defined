@@ -24,8 +24,8 @@ try{
  for(const [id,p] of Object.entries(pages)){
    const r=await fetch(base+'/'+folders[p.site]+'/'+id);assert.equal(r.status,200,id);assert.match(r.headers.get('content-type'),/text\/html/);count+=2;
  }
- for(const p of ['/forum','/forum/search?q=17B','/sites.js','/sites.css']){assert.equal((await fetch(base+p)).status,200);count++;}
- for(const p of ['/unknown/absent','/forum/hospital','/archive/complaint','/extra-content.mjs']){assert.equal((await fetch(base+p)).status,404);count++;}
+ for(const p of ['/forum','/forum/search?q=17B','/sites.js','/sites.css','/endings.js','/endings.css']){assert.equal((await fetch(base+p)).status,200);count++;}
+ for(const p of ['/unknown/absent','/forum/hospital','/archive/complaint','/extra-content.mjs','/story-copy.mjs']){assert.equal((await fetch(base+p)).status,404);count++;}
  const created=await fetch(base+'/api/create',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:'routes',capacity:1})});const cookie=created.headers.get('set-cookie').split(';')[0];
  const search=await (await fetch(base+'/api/search?q=F3271',{headers:{Cookie:cookie}})).json();assert(!search.results.some(p=>p.id==='dispatch'));count++;
  console.log(`PASS ${count} checks: 46 reachable pages, single discovery parent, native routes, wrong-site 404, no search bypass.`);

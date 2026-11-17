@@ -34,22 +34,22 @@ export function mountAnnotator(root,{tasks,room,player,submit}){
     list.innerHTML=room.players.map(p=>{
       const records=room.annotations?.[p.id]||{};
       const done=tasks.filter(t=>records[t.id]);
-      return `<p><b>${escapeHTML(p.name)}</b>　${done.length?done.map(t=>t.id+'：'+(records[t.id].answer==='none'?'没有人':records[t.id].boxes.length+'个人物框')).join(' / '):'尚未提交'}</p>`;
+      return `<p><b>${escapeHTML(p.name)}</b>　${done.length?done.map(t=>t.label+'：'+(records[t.id].answer==='none'?'没有人':records[t.id].boxes.length+'个人物框')).join(' / '):'尚未提交'}</p>`;
     }).join('');
   }
   function render(){
     const task=tasks[index],record=previous();drag=null;
     if(review&&!record)review=false;
-    root.innerHTML=`<div class="task-header">17-B / ${task.id}　<span>第 ${index+1} 张，共 ${tasks.length} 张</span></div>
+    root.innerHTML=`<div class="task-header">旧照片 / ${task.label}　<span>第 ${index+1} 张，共 ${tasks.length} 张</span></div>
       <p class="annotation-instruction">拖动框出人影；没看到就提交“没有人”。</p>
       <div class="annotation-stage" tabindex="0" role="group" aria-label="照片标注区；按回车开始框选，方向键移动，回车完成，Escape取消">
-        <img src="/assets/${review?task.resultImage:task.image}.jpg" alt="${task.id} / ${review?'复核副本':'待标原图'}" width="800" height="600" draggable="false">
+        <img src="/assets/${review?task.resultImage:task.image}.jpg" alt="${task.label} / ${review?'退回来的图':'待标原图'}" width="800" height="600" draggable="false">
         <svg class="annotation-overlay" viewBox="0 0 1000 750" aria-hidden="true"></svg>
       </div>
       <div class="annotation-toolbar"><span class="annotation-count"></span><button type="button" data-annotation="undo">撤销上个框</button><button type="button" data-annotation="clear">清空</button><button type="button" data-annotation="toggle" ${record?'':'disabled'}>${review?'返回原图，重新标注':'查看我的复核结果'}</button></div>
       <form class="annotation-form"><button class="main-button" name="answer" value="person" ${review?'disabled':''}>提交人物框</button><button name="answer" value="none" ${review?'disabled':''}>没有人，提交空图</button></form>
-      <p class="annotation-message" role="status">${review?(record.answer==='none'?'退回：人物区域遗漏。参考结果已更新。':'已收到人物框。参考结果已更新。'):'每张0.07元 / 提交后返回复核副本。'}</p>
-      <div class="annotation-pagination"><button type="button" data-annotation="prev" ${index===0?'disabled':''}>上一张</button><span>${task.id}</span><button type="button" data-annotation="next" ${index===tasks.length-1?'disabled':''}>下一张</button></div>
+      <p class="annotation-message" role="status">${review?(record.answer==='none'?'退回：漏标了人。看看退回来的图。':'已收到人物框。参考结果已更新。'):'每张0.07元 / 提交后返回退回来的图。'}</p>
+      <div class="annotation-pagination"><button type="button" data-annotation="prev" ${index===0?'disabled':''}>上一张</button><span>${task.label}</span><button type="button" data-annotation="next" ${index===tasks.length-1?'disabled':''}>下一张</button></div>
       <details class="annotation-team-wrap"><summary>本组提交记录</summary><div class="annotation-team"></div></details>
       <details class="annotation-keyboard"><summary>键盘框选</summary><p>焦点移到照片后，方向键移动起点；回车落下第一角，再用方向键调整另一角，回车完成。Escape取消当前框。</p></details>`;
     draw();team();

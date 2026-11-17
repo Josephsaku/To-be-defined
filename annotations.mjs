@@ -1,7 +1,7 @@
 export const annotationTasks = [
-  {id:'D04',image:'hall',resultImage:'hall-change',reference:{x:.65,y:.20,w:.20,h:.64}},
-  {id:'S08',image:'stairs',resultImage:'stairs-changed',reference:{x:.55,y:.37,w:.085,h:.34}},
-  {id:'W10',image:'loading',resultImage:'loading-changed',reference:{x:.80,y:.20,w:.08,h:.38}}
+  {id:'D04',label:'器材间',image:'hall',resultImage:'hall-change',reference:{x:.65,y:.20,w:.20,h:.64}},
+  {id:'S08',label:'楼梯间',image:'stairs',resultImage:'stairs-changed',reference:{x:.55,y:.37,w:.085,h:.34}},
+  {id:'W10',label:'卸货口',image:'loading',resultImage:'loading-changed',reference:{x:.80,y:.20,w:.08,h:.38}}
 ];
 
 export function validateAnnotation(input) {

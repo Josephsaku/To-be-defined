@@ -1,3 +1,4 @@
+import {reviseStory} from './story-copy.mjs';
 import {extendDarkCase} from './dark-case.mjs';
 import {extendContent,expandedForumOrder} from './extra-content.mjs';
 export const introduction = {
@@ -26,10 +27,11 @@ export const pages = {
 };
 extendContent(pages);
 extendDarkCase(pages,expandedForumOrder);
+reviseStory(pages);
 export const evidence = Object.fromEntries(Object.entries(pages).filter(([,p])=>p.evidence).map(([id,p])=>[p.evidence,{id:p.evidence,title:p.title,source:id,excerpt:p.body[0]}]));
 export const forumOrder=expandedForumOrder;
 export const hints=[
-  ['从空罐头的原帖和结算记录开始，找出17-B的原始图片出处。','出库单和老周的出库通知写着档案口令的两部分。','工单F-3271取后四位，再接卷号0814：32710814。'],
-  ['原片目录有三组资料。每组的拍摄单位和编号都能回查。','来源核对表问的是实际拍摄地点，不是暗部看起来像不像。','D04对应医院，S08对应学校，W10对应货站。'],
-  ['回信需要交代罗启去了哪、平台出了什么问题、现在怎么处理。','复核记录解释错误答案怎样累积；停用登记提供处置办法。','去向是南郊货站。保留原片，撤销地点合并，隔离17-B。附三组来源、复核记录、停用记录和罗启留言。']
+  ['从空罐头的原帖和结算记录开始，找出17-B的原始图片出处。','借照片的单子上有工单和日期。老周的搬库通知说了密码怎么拼。','工单3271，再接8月14日的0814，密码就是32710814。'],
+  ['原片目录有三组资料。每组的拍摄单位和编号都能回查。','来源核对表问的是实际拍摄地点，不是暗部看起来像不像。','器材间是医院，楼梯间是学校，卸货口是货站。'],
+  ['回信需要交代罗启去了哪、平台出了什么问题、现在怎么处理。','复核记录解释错误答案怎样累积；停用登记提供处置办法。','罗启去了南郊货站。留下原片，把三处地方分开，停用改过的图。别漏掉接人登记。']
 ];

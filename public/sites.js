@@ -12,7 +12,7 @@ export function locationRoute(){
   if(p.length===2&&Object.values(folders).includes(p[0]))return{type:'doc',id:decodeURIComponent(p[1])};
   return null;
 }
-export function routeURL(route){return route.type==='doc'?docURL(route.id):route.type==='ending'?'/mail/received':route.type==='search'?'/forum/search'+(route.q?'?q='+encodeURIComponent(route.q):''):'/forum'+(route.board?'?board='+encodeURIComponent(route.board):'');}
+export function routeURL(route){return route.type==='doc'?docURL(route.id):route.type==='ending'?'/forum':route.type==='search'?'/forum/search'+(route.q?'?q='+encodeURIComponent(route.q):''):'/forum'+(route.board?'?board='+encodeURIComponent(route.board):'');}
 export function activateLinks(root=document){
   root.querySelectorAll('button[data-doc],button[data-route]').forEach(button=>{
     const link=document.createElement('a');for(const attr of button.attributes)link.setAttribute(attr.name,attr.value);
@@ -31,7 +31,7 @@ export function setSite(site,title=''){
   const root=document.getElementById('site-chrome');if(root.dataset.site!==site){root.innerHTML=chrome(site);root.dataset.site=site;}
   const names={forum:'散工之家',platform:'分图网',archive:'旧影库',mail:'站内通信'};
   document.title=(title?title+' - ':'')+names[site];
-  document.getElementById('site-footer').textContent=site==='forum'?'散工之家 © 2005—2011　论坛事务 / 联系版主':site==='platform'?'分图网 © 2009—2011　作业编号与原图记录一并保留':site==='archive'?'南郊影像资料保管室　·　调阅后按原卷号归还':'站内信 / 已保存通信副本';
+  document.getElementById('site-footer').textContent=site==='forum'?'散工之家 © 2005—2011　论坛事务 / 联系版主':site==='platform'?'分图网 © 2009—2011　原图和交过的作业都能回查':site==='archive'?'南郊影像资料保管室　·　看完按原来的袋子装好':'站内信 / 已保存通信副本';
 }
 export function forumHome(catalog,room,board=''){
   const boards=['接单交流','电脑杂谈','本地消息','闲聊灌水','二手交易','站务与公告'];

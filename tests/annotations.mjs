@@ -33,15 +33,15 @@ try{
  assert.equal(before.annotations[joined.player.id].D04.answer,'none');count++;
  assert.equal(before.annotations[made.player.id].S08.boxes[0].w,1);count++;
  await stop();await start();const after=await req(a,'/api/state');assert.deepEqual(after.annotations,before.annotations);count++;
- const assets=new Set(['close-change']);
+ const assets=new Set(['close-change','ending-found','ending-substitute','ending-spread']);
  for(const p of Object.values(pages)){if(p.image)assets.add(p.image);for(const im of p.images||[])assets.add(im.name);}
  for(const t of annotationTasks){assets.add(t.image);assets.add(t.resultImage);}
- assert.equal(assets.size,17);count++;
+ assert.equal(assets.size,20);count++;
  for(const name of assets){const res=await fetch(base+'/assets/'+name+'.jpg');assert.equal(res.status,200,name);assert.match(res.headers.get('content-type'),/image\/jpeg/);assert((await res.arrayBuffer()).byteLength>10000);count+=3;}
  assert(!('objective' in introduction));count++;
  const app=await (await fetch(base+'/app.js')).text();assert(!app.includes('含两处短促异常画面'));count++;
  assert.equal((await fetch(base+'/annotator.js')).status,200);count++;
  assert.equal((await fetch(base+'/annotations.mjs')).status,404);count++;
- console.log(`PASS ${count} annotation and asset checks: validation, independent players, multiple images, persistence, 17 live JPEGs, removed text.`);
+ console.log(`PASS ${count} annotation and asset checks: validation, independent players, multiple images, persistence, 20 live JPEGs, removed text.`);
  
 }finally{if(child?.exitCode===null)await stop();cleanupData(data);}
