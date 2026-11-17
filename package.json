@@ -3,7 +3,7 @@
   "version": "0.3.0",
   "private": true,
   "type": "module",
-  "description": "待确认：2–3人局域网网页合作调查游戏",
+  "description": "待确认：单人及2–3人局域网网页调查游戏",
   "license": "UNLICENSED",
   "engines": {
     "node": ">=20"

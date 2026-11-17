@@ -36,6 +36,7 @@ function maybeArm(r){if(r.ending||r.scene)return;if(r.labeled&&r.discoveries.som
 function schedule(r){if(!r.scene||r.scene.at)return;const ready=r.players.length===r.capacity&&r.players.every(p=>{const a=presence.get(p.id);return active(p)&&a?.visible&&a?.assets&&Date.now()-a.time<12000;});if(ready){r.scene.at=Date.now()+1800;save();push(r);}}
 function completeScene(r){if(!r.scene||r.scene.acks.length!==r.capacity)return;const name=r.scene.id;r.sceneHistory.push(name);r.scene=null;if(name==='close'){r.phase=2;r.hintLevel=0;event(r,null,'封存附件已恢复。','restriction');}save();push(r);}
 function update(r,p,b){
+ if(b.type==='soloStart'){if(r.host!==p.id||r.started||r.players.length!==1)error('只有独自在等待中的房主可以单人开始。');r.capacity=1;r.started=true;r.startedAt=Date.now();return;}
  if(b.type==='capacity'){if(r.host!==p.id||r.started)error('只有房主能在开始前修改人数。');if(![2,3].includes(b.value)||b.value<r.players.length)error('人数不匹配。');r.capacity=b.value;return;}
  if(b.type==='start'){if(r.host!==p.id)error('等房主开始。');if(r.players.length!==r.capacity)error('人还没到齐。');if(!r.started){r.started=true;r.startedAt=Date.now();}return;}
  if(!r.started)error('房间尚未开始。');
@@ -66,8 +67,8 @@ const server=http.createServer(async(req,res)=>{res.setHeader('X-Content-Type-Op
  if(req.method==='POST'){if(req.headers.origin&&new URL(req.headers.origin).host!==req.headers.host)error('从游戏页面操作。',403);if(!req.headers['content-type']?.includes('application/json'))error('格式不正确。',415);}
  if(u.pathname==='/api/session'){try{const{r,p}=auth(req);return json(res,200,{room:snapshot(r),player:{id:p.id,name:p.name},intro:introduction});}catch{return json(res,200,{room:null,player:null,intro:introduction});}}
  if(['/api/create','/api/join'].includes(u.pathname)&&req.method==='POST'){
-  const b=await body(req),name=clean(b.name,20);if(!name)error('填个昵称。');let r;
-  if(u.pathname==='/api/create'){let code;do{code=crypto.randomBytes(3).toString('hex').toUpperCase();}while(rooms[code]);r={code,capacity:[1,2,3].includes(b.capacity)?b.capacity:3,host:null,players:[],started:false,phase:0,evidence:[],discoveries:[],notes:[],events:[],unlocked:false,labeled:false,mapped:false,scene:null,sceneHistory:[],report:null,signatures:[],feedback:'',ending:null,hintLevel:0};rooms[code]=r;}
+  const b=await body(req),solo=u.pathname==='/api/create'&&b.mode==='solo',name=clean(b.name,20)||(solo?'访客':'');if(!name)error('填个昵称。');let r;
+  if(u.pathname==='/api/create'){let code;do{code=crypto.randomBytes(3).toString('hex').toUpperCase();}while(rooms[code]);r={code,capacity:solo?1:([1,2,3].includes(b.capacity)?b.capacity:3),host:null,players:[],started:solo,startedAt:solo?Date.now():undefined,phase:0,evidence:[],discoveries:[],notes:[],events:[],unlocked:false,labeled:false,mapped:false,scene:null,sceneHistory:[],report:null,signatures:[],feedback:'',ending:null,hintLevel:0};rooms[code]=r;}
   else{r=rooms[clean(b.code).toUpperCase()];if(!r)error('房间码不对。',404);if(r.started||r.players.length>=r.capacity)error('房间已开始或已满员。');}
   if(r.players.some(p=>p.name===name))error('昵称有人用了。');const p={id:id(),token:id(),name,seen:[]};r.players.push(p);r.host||=p.id;save();push(r);return json(res,200,{room:snapshot(r),player:{id:p.id,name}}, {'Set-Cookie':`pending_session=${p.token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=2592000`});
  }
