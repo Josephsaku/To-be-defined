@@ -18,7 +18,33 @@ export const endings={
   ]}
 };
 
+export const caseStory=[
+  ['一笔十九块六的工钱',[
+    '罗启白天修电脑，晚上在分图网接零活。那批旧照片每张七分钱，他做了两个晚上，却总被退回来：门边漏了一个人。为了拿到十九块六，别人照参考图补框。他不肯，因为他存下来的第一张图，那里根本没人。',
+    '这批照片早在去年就出过事。原片分别属于医院、学校和货站，门边的异常会借人们确认的描述改变自己。当年的投诉最后被当成失联工单结掉。今年扫描店重新交文件，平台又把它们发给了下一批兼职。'
+  ]],
+  ['它是怎么长出来的',[
+    '最开始，它只有一块分不清形状的暗处。第一批人把那里认作人，下一轮预览就长出了头和肩膀；更多人对着这张新图补框，身形便越来越完整。平台再把这些答案设成标准，连原本没看见的人，也得照着它改。',
+    '标注在这批照片上成了给它定形的办法。旧回访试过：只浏览时画面不变，提交确认后才变；普通街景没有这种现象。软件只是在反复收答案，照片里的东西借这套流程，让一批陌生人替它确认自己存在。它最初从哪里来，留下的资料没有说。',
+    '三张照片被填成同一处以后，医院的器材架、学校的楼梯和货站的门开始接在一起。原件仍能证明各自的出处，网上沿用的错误描述却把它们连成了一条走不完的路。'
+  ]],
+  ['罗启走进了照片里',[
+    '客服同意让罗启去长桥图文核对原件。纸质资料放在南郊货站的租用库房，他晚上送完电脑顺路过去，还提前把姐姐填成备用代领人，原本只是想让她帮忙拿三袋材料。',
+    '到库房后，他确认纸上没有人。可门后的路已经不对：在货站开门，走进去却是学校的楼梯。罗启试着改回一处来源，走廊短了一截；错误参考再次覆盖他的修改，路又接上了。他用手机把经过和照片补进客服工单。',
+    '21:08，一条没有操作人的记录，把现场复核人的姓名抄进了照片内人物一栏。门边那个东西开始用罗启的声音咳嗽，开始叫姐姐。它已经有了形状和名字，还需要一个人承认：这就是我要接走的人。'
+  ]],
+  ['最后一张取件单',[
+    '罗启填过的代领申请成了现成的出口。三袋纸质原件被改成“罗启，1人”，通知继续催罗岚来签收。她只要照着那张单接人，就会把门边的东西认成弟弟。去年那句“家里人说接到我了，我还在门里面”，说的也是这件事。',
+    '三份原片让你们能纠正地点，停用错误参考能阻止它继续覆盖回来；撤掉代领申请，则让那张偷来的名字失去交件凭据。出口和身份必须分别处理，少一步，出来的就可能是另一个。'
+  ]]
+];
+const aftermath={
+ found:'这一次，两件事都做完了。罗启沿着恢复的通道出来，姐姐接到的是会疼、会喘、催她快走的弟弟。那张等着她签字的取件单，已经作废。',
+ substitute:'这一次，地点改回来了，代领申请却还有效。门边的东西先走出出口，顶着罗启的名字来到姐姐面前。你们找对了地方，也打开了门，真正的罗启却仍在后面等着。',
+ spread:'这一次，改过的图片被继续发了出去。新的浏览者又成了下一批确认它的人，越来越多的副本沿用同一个名字。罗岚推开门时，里面已经不止一个罗启。'
+};
+
 export function endingHTML(key){
   const ending=endings[key];
-  return `<article class="ending-card ending-${ending.tone}"><button class="ending-close" data-do="ending-close" aria-label="关闭结局，继续查看资料">×</button><img class="ending-photo" src="/assets/${ending.image}.jpg" alt="${ending.alt}"><div class="ending-copy"><p class="ending-label">${ending.label}</p><h1 id="ending-title">${ending.title}</h1>${ending.paragraphs.map(p=>`<p>${p}</p>`).join('')}<div class="ending-actions"><button data-do="export">保存调查记录</button>${key==='found'?'':'<button class="main-button" data-do="rewind">回到最后一步</button>'}<button data-do="ending-close">继续翻看资料</button></div></div></article>`;
+  return `<article class="ending-card ending-${ending.tone}"><button class="ending-close" data-do="ending-close" aria-label="关闭结局，继续查看资料">×</button><img class="ending-photo" src="/assets/${ending.image}.jpg" alt="${ending.alt}"><div class="ending-copy"><p class="ending-label">${ending.label}</p><h1 id="ending-title">${ending.title}</h1>${ending.paragraphs.map(p=>`<p>${p}</p>`).join('')}<section class="ending-story" aria-label="完整故事"><h2>那两天发生了什么</h2>${caseStory.map(([title,paragraphs])=>`<section><h3>${title}</h3>${paragraphs.map(p=>`<p>${p}</p>`).join('')}</section>`).join('')}<p class="ending-aftermath">${aftermath[key]}</p></section><div class="ending-actions"><button data-do="export">保存调查记录</button>${key==='found'?'':'<button class="main-button" data-do="rewind">回到最后一步</button>'}<button data-do="ending-close">继续翻看资料</button></div></div></article>`;
 }

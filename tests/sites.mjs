@@ -24,7 +24,7 @@ try{
  for(const [id,p] of Object.entries(pages)){
    const r=await fetch(base+'/'+folders[p.site]+'/'+id);assert.equal(r.status,200,id);assert.match(r.headers.get('content-type'),/text\/html/);count+=2;
  }
- for(const p of ['/forum','/forum/search?q=17B','/sites.js','/sites.css','/endings.js','/endings.css','/pickup.js','/pickup.css']){assert.equal((await fetch(base+p)).status,200);count++;}
+ for(const p of ['/start','/forum','/forum/search?q=17B','/sites.js','/sites.css','/endings.js','/endings.css','/pickup.js','/pickup.css']){assert.equal((await fetch(base+p)).status,200);count++;}
  for(const p of ['/unknown/absent','/forum/hospital','/archive/complaint','/extra-content.mjs','/story-copy.mjs','/forum-conversations.mjs']){assert.equal((await fetch(base+p)).status,404);count++;}
  for(const [old,next] of [['/archive/dispatch','/pickup/dispatch'],['/archive/voice','/workbench/voice']]){const response=await fetch(base+old,{redirect:'manual'});assert.equal(response.status,302);assert.equal(response.headers.get('location'),next);count+=2;}
  const created=await fetch(base+'/api/create',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:'routes',capacity:1})});const cookie=created.headers.get('set-cookie').split(';')[0];

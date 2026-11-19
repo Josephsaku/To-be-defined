@@ -1,8 +1,8 @@
-a[data-doc],a[data-route],a[data-board]{cursor:pointer;color:var(--blue);text-decoration:none}
-a[data-doc]:hover,a[data-route]:hover,a[data-board]:hover{text-decoration:underline}
+a[data-doc],a[data-route]{cursor:pointer;color:var(--blue);text-decoration:none}
+a[data-doc]:hover,a[data-route]:hover{text-decoration:underline}
 .main-nav a{display:flex;align-items:center;padding:0 22px;color:white}
 .main-nav>span{margin-left:auto;align-self:center;color:#d6e1eb;font-size:11px;padding-right:14px}
-.board-tabs{gap:18px;flex-wrap:wrap}.board-tabs a[aria-current]{font-weight:bold;background:white;padding:3px 10px;border:1px solid #b8c8d7}
+
 .thread-subject a{font-size:13px;color:#214b72}.thread-row{min-height:58px;padding-top:11px;padding-bottom:11px}
 .related>a{display:block;margin:9px 0}.breadcrumb a{font-size:11px}
 .utility{background:#e4e6e9;border-color:#c8cbd0;color:#5c636d}.utility button{color:#59606b}
@@ -36,4 +36,6 @@ body.case-negative{background:#08090a}
 .case-negative .record-table td:last-child{color:#159cab}
 .case-negative .record-table tr:last-child{border-bottom:3px solid #17b9ca}
 .case-negative .archive-strip{background:#c4b1a8;color:#242327}
-@media(max-width:800px){.main-nav>span,.workbench-brand small,.workbench-brand>div,.workbench-strip>span{display:none}.workbench-brand,.archive-mast{padding:20px}.workbench-strip,.archive-strip{margin:0 18px;padding:10px 15px}.record-heading,.record-body{padding:20px}.record-heading dl{flex-direction:column;gap:7px}.record-table{font-size:11px}.record-table td,.record-table th{padding:7px}.archive-mast>span{font-size:10px}.board-tabs{gap:11px}.mail-mast{padding:20px}.mail-mast span{display:none}}
+@media(max-width:800px){.main-nav>span,.workbench-brand small,.workbench-brand>div,.workbench-strip>span{display:none}.workbench-brand,.archive-mast{padding:20px}.workbench-strip,.archive-strip{margin:0 18px;padding:10px 15px}.record-heading,.record-body{padding:20px}.record-heading dl{flex-direction:column;gap:7px}.record-table{font-size:11px}.record-table td,.record-table th{padding:7px}.archive-mast>span{font-size:10px}.mail-mast{padding:20px}.mail-mast span{display:none}}
+
+.thread-preview{display:block;color:#87929d;font-size:11px;line-height:1.7;margin-top:6px;max-width:650px}.thread-row{padding-top:14px;padding-bottom:14px}.thread-last{color:#8896a3;margin-top:4px}.post-content .signature{line-height:1.8}.reply .post-content>p{white-space:pre-wrap;line-height:2}

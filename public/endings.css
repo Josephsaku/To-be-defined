@@ -7,3 +7,5 @@
 .ending-safe{background:#e8e2d8;color:#302f2b}.ending-safe .ending-label{color:#6e6048}.ending-safe .ending-actions{border-color:#302f2b33}.ending-safe .ending-actions button{background:#d6cebe;color:#38332c;border-color:#aa9d87}
 .ending-wrong .ending-copy,.ending-lost .ending-copy{border-top-color:#923c38}.ending-wrong .ending-label,.ending-lost .ending-label{color:#db8e81}
 @media(max-width:600px){#ending-dialog{width:calc(100vw - 16px);max-height:96dvh}.ending-copy{padding:20px}.ending-copy p{font-size:14px}.ending-photo{max-height:38vh}}
+
+.ending-story{border-top:1px solid #92857266;margin-top:32px;padding-top:28px}.ending-story h2{font:700 24px/1.5 SimSun,serif;color:inherit;letter-spacing:2px}.ending-story h3{font-size:15px;color:inherit;margin:27px 0 10px}.ending-story p{font-size:14px;line-height:2.05}.ending-story .ending-aftermath{border-left:3px solid #a77754;padding:8px 0 8px 18px;margin-top:25px}.ending-close{position:sticky;display:block;margin:0 14px -52px auto;top:14px;z-index:1}

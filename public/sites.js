@@ -7,18 +7,19 @@ export const siteFor=id=>id==='appeal'?'mail':platformIds.has(id)?'platform':arc
 export const docURL=id=>'/'+folders[siteFor(id)]+'/'+encodeURIComponent(id);
 export function locationRoute(){
   const p=location.pathname.split('/').filter(Boolean);
-  if(p.length===1&&p[0]==='forum')return{type:'home',board:new URLSearchParams(location.search).get('board')||''};
+  if(p.length===1&&p[0]==='forum')return{type:'home'};
   if(p[0]==='forum'&&p[1]==='search')return{type:'search',q:new URLSearchParams(location.search).get('q')||''};
   if(p[0]==='mail'&&p[1]==='received')return{type:'ending'};
-  if(p.length===2&&Object.values(folders).includes(p[0]))return{type:'doc',id:decodeURIComponent(p[1])};
+  if(p.length===2&&Object.values(folders).includes(p[0]))return{type:'doc',id:decodeURIComponent(p[1]),from:new URLSearchParams(location.search).get('from')||''};
   return null;
 }
-export function routeURL(route){return route.type==='doc'?docURL(route.id):route.type==='ending'?'/forum':route.type==='search'?'/forum/search'+(route.q?'?q='+encodeURIComponent(route.q):''):'/forum'+(route.board?'?board='+encodeURIComponent(route.board):'');}
+export function routeURL(route){return route.type==='doc'?docURL(route.id):route.type==='ending'?'/forum':route.type==='search'?'/forum/search'+(route.q?'?q='+encodeURIComponent(route.q):''):'/forum';}
 export function activateLinks(root=document){
   root.querySelectorAll('button[data-doc],button[data-route]').forEach(button=>{
     const link=document.createElement('a');for(const attr of button.attributes)link.setAttribute(attr.name,attr.value);
     link.href=button.dataset.doc?docURL(button.dataset.doc):routeURL({type:button.dataset.route});link.innerHTML=button.innerHTML;button.replaceWith(link);
   });
+  root.querySelectorAll('a[data-doc]').forEach(link=>{link.href=docURL(link.dataset.doc)+(link.dataset.from?'?from='+encodeURIComponent(link.dataset.from):'');link.target='_blank';link.rel='noopener';link.title='在新标签页打开';});
 }
 export function chrome(site){
   const back='<button class="site-back" data-do="back">← 返回来页</button>';
@@ -34,10 +35,9 @@ export function setSite(site,title=''){
   document.title=(title?title+' - ':'')+names[site];
   document.getElementById('site-footer').textContent=site==='forum'?'散工之家 © 2005—2011　论坛事务 / 联系版主':site==='platform'?'分图网 © 2009—2011　原图和交过的作业都能回查':site==='archive'?'长桥图文 · 文化路十八号 · 网上取文件，到店拿原件':'站内信 / 已保存通信副本';
 }
-export function forumHome(catalog,room,board=''){
-  const boards=['接单交流','电脑杂谈','本地消息','闲聊灌水','二手交易','站务与公告'];
-  const rows=board?catalog.forum.filter(p=>p.board===board):catalog.forum;
-  return `<div class="breadcrumb">散工之家 » ${esc(board||'论坛首页')}</div><div class="forum-summary"><h1>${esc(board||'散工之家')}</h1><p>截图尽量留全。发工资了记得回来报一声。</p><span>主题 ${catalog.forum.length}　|　当前在线 ${room.capacity} 人　|　版主：站务小陈</span></div><div class="board-tabs"><a href="/forum" data-board="" ${!board?'aria-current="page"':''}>全部</a>${boards.map(b=>`<a href="/forum?board=${encodeURIComponent(b)}" data-board="${b}" ${b===board?'aria-current="page"':''}>${b}</a>`).join('')}</div><div class="thread-table"><div class="thread-head"><span>主题</span><span>作者</span><span>回复 / 查看</span><span>发帖 / 跟帖</span></div>${rows.map(p=>`<div class="thread-row"><div class="thread-subject"><span class="thread-icon ${p.pinned?'pin':''}">${p.pinned?'置顶':'▤'}</span><span><small>[${esc(p.board)}]</small> <a href="${docURL(p.id)}" data-doc="${p.id}" data-from="论坛列表">${esc(p.title)}</a><p class="thread-preview">${esc(p.excerpt)}…</p></span></div><div>${esc(p.author)}<small>论坛会员</small></div><div>${p.replies} / ${p.views}</div><div><span class="thread-last">${esc(p.lastReplyAuthor)}</span><time>${esc(p.date)}</time></div></div>`).join('')}</div><div class="forum-lower"><section><h3>在线会员</h3><p>${room.players.map(p=>esc(p.name)).join('　')}　游客 17 人</p><p>发帖前看一下板块，交易帖留个所在区。</p></section><section><h3>站务</h3><p>附件单张不超过 800KB。维修问题写清机器型号。</p><p>求助帖不要直接改成“已解决”，办法留给后来的人。</p></section></div>`;
+export function forumHome(catalog,room){
+  const rows=catalog.forum;
+  return `<div class="breadcrumb">散工之家 » 论坛首页</div><div class="forum-summary"><h1>散工之家</h1><p>截图尽量留全。发工资了记得回来报一声。</p><span>主题 ${catalog.forum.length}　|　当前在线 ${room.capacity} 人　|　版主：站务小陈</span></div><div class="thread-table"><div class="thread-head"><span>主题</span><span>作者</span><span>回复 / 查看</span><span>发帖 / 跟帖</span></div>${rows.map(p=>`<div class="thread-row"><div class="thread-subject"><span class="thread-icon ${p.pinned?'pin':''}">${p.pinned?'置顶':'▤'}</span><span><small>[${esc(p.board)}]</small> <a href="${docURL(p.id)}" data-doc="${p.id}" data-from="论坛列表">${esc(p.title)}</a><p class="thread-preview">${esc(p.excerpt)}…</p></span></div><div>${esc(p.author)}<small>论坛会员</small></div><div>${p.replies} / ${p.views}</div><div><span class="thread-last">${esc(p.lastReplyAuthor)}</span><time>${esc(p.date)}</time></div></div>`).join('')}</div><div class="forum-lower"><section><h3>在线会员</h3><p>${room.players.map(p=>esc(p.name)).join('　')}　游客 17 人</p><p>发帖前看一下板块，交易帖留个所在区。</p></section><section><h3>站务</h3><p>附件单张不超过 800KB。维修问题写清机器型号。</p><p>求助帖不要直接改成“已解决”，办法留给后来的人。</p></section></div>`;
 }
 export function externalDoc(d,{picture,special}){
   if(d.site==='archive')return pickupDoc(d,{picture,special,docURL});

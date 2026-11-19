@@ -14,6 +14,7 @@ const rooms=fs.existsSync(saveFile)?JSON.parse(fs.readFileSync(saveFile,'utf8'))
 for(const r of Object.values(rooms))if(r.scene?.at&&!r.scene.acks.length)r.scene.at=null;
 for(const r of Object.values(rooms))r.pickupAccess??=Boolean(r.unlocked||r.discoveries?.some(d=>['dispatch','archive'].includes(d.id))||r.players.some(p=>p.seen?.includes('dispatch')));
 const live=new Map(),presence=new Map();
+function readyPlayer(p){return [...(presence.get(p.id)?.entries()||[])].some(([tab,a])=>a.visible&&a.assets&&Date.now()-a.time<12000&&[...(live.get(p.id)||[])].some(res=>res.gameTab===tab));}
 function lanAddresses(port){return Object.entries(os.networkInterfaces()).flatMap(([name,items])=>
   /vmware|virtualbox|vethernet|docker|loopback|tailscale|zerotier|clash|tun/i.test(name)?[]:
   items.filter(a=>a.family==='IPv4'&&!a.internal&&!a.address.startsWith('198.18.')&&!a.address.startsWith('198.19.')&&!a.address.startsWith('169.254.')).map(a=>({name,url:'http://'+a.address+':'+port}))
@@ -38,14 +39,14 @@ function caseHint(r){if(!r.hintLevel)return '';const n=r.hintLevel-1;
  return hints[Math.min(r.phase,2)][n];}
 
 function maybeArm(r){if(r.ending||r.scene)return;if(r.labeled&&r.discoveries.some(d=>d.id==='complaint')&&r.discoveries.some(d=>d.id==='settlement')&&!r.sceneHistory.includes('preview'))r.scene={id:'preview',at:null,acks:[]};else if(r.sceneHistory.includes('preview')&&r.mapped&&r.evidence.includes('E07')&&r.evidence.includes('E09')&&!r.sceneHistory.includes('close'))r.scene={id:'close',at:null,acks:[]};}
-function schedule(r){if(!r.scene||r.scene.at)return;const ready=r.players.length===r.capacity&&r.players.every(p=>{const a=presence.get(p.id);return active(p)&&a?.visible&&a?.assets&&Date.now()-a.time<12000;});if(ready){r.scene.at=Date.now()+1800;save();push(r);}}
+function schedule(r){if(!r.scene||r.scene.at)return;const ready=r.players.length===r.capacity&&r.players.every(readyPlayer);if(ready){r.scene.at=Date.now()+1800;save();push(r);}}
 function completeScene(r){if(!r.scene||r.scene.acks.length!==r.capacity)return;const name=r.scene.id;r.sceneHistory.push(name);r.scene=null;if(name==='close'){r.phase=2;r.hintLevel=0;event(r,null,'同组照片的旧工单附件已找回。','restriction');}save();push(r);}
 function update(r,p,b){
  if(b.type==='soloStart'){if(r.host!==p.id||r.started||r.players.length!==1)error('只有独自在等待中的房主可以单人开始。');r.capacity=1;r.started=true;r.startedAt=Date.now();return;}
  if(b.type==='capacity'){if(r.host!==p.id||r.started)error('只有房主能在开始前修改人数。');if(![2,3].includes(b.value)||b.value<r.players.length)error('人数不匹配。');r.capacity=b.value;return;}
  if(b.type==='start'){if(r.host!==p.id)error('等房主开始。');if(r.players.length!==r.capacity)error('人还没到齐。');if(!r.started){r.started=true;r.startedAt=Date.now();}return;}
  if(!r.started)error('房间尚未开始。');
- if(b.type==='presence'){presence.set(p.id,{visible:b.visible===true,assets:b.assets===true,time:Date.now()});schedule(r);return;}
+ if(b.type==='presence'){const tab=clean(b.tab,80)||'legacy';if(!presence.has(p.id))presence.set(p.id,new Map());const tabs=presence.get(p.id);for(const [key,a]of tabs)if(Date.now()-a.time>12000)tabs.delete(key);tabs.set(tab,{visible:b.visible===true,assets:b.assets===true,time:Date.now()});schedule(r);return;}
  if(b.type==='sceneAck'){if(r.scene?.id===b.id&&r.scene.at&&Date.now()>=r.scene.at){if(!r.scene.acks.includes(p.id))r.scene.acks.push(p.id);completeScene(r);}return;}
  if(b.type==='collect'){const e=evidence[b.id];if(!e)error('没有这份资料。');available(r,e.source);if(!p.seen.includes(e.source))error('先打开原文。');if(!r.evidence.includes(b.id)){r.evidence.push(b.id);event(r,p,'收藏了「'+e.title+'」',e.source);}return;}
  if(b.type==='note'){const body=clean(b.body,1500);if(!body)error('笔记还是空的。');if(r.notes.length>=100)error('笔记已满。');r.notes.push({id:id(),by:p.name,body});return;}
@@ -80,8 +81,8 @@ const server=http.createServer(async(req,res)=>{res.setHeader('X-Content-Type-Op
  }
  if(u.pathname==='/api/network')return json(res,200,{addresses:lanAddresses(server.address().port).map(a=>a.url)});
  if(u.pathname==='/api/events'){
-  const{r,p}=auth(req);res.writeHead(200,{'Content-Type':'text/event-stream','Cache-Control':'no-cache','Connection':'keep-alive'});res.write('retry: 1500\n\n');if(!live.has(p.id))live.set(p.id,new Set());live.get(p.id).add(res);push(r);
-  const timer=setInterval(()=>res.write(': pulse\n\n'),10000);req.on('close',()=>{clearInterval(timer);live.get(p.id)?.delete(res);if(!active(p))presence.delete(p.id);push(r);});return;
+  const{r,p}=auth(req);res.gameTab=clean(u.searchParams.get('tab'),80)||'legacy';res.writeHead(200,{'Content-Type':'text/event-stream','Cache-Control':'no-cache','Connection':'keep-alive'});res.write('retry: 1500\n\n');if(!live.has(p.id))live.set(p.id,new Set());live.get(p.id).add(res);push(r);
+  const timer=setInterval(()=>res.write(': pulse\n\n'),10000);req.on('close',()=>{clearInterval(timer);live.get(p.id)?.delete(res);if(![...(live.get(p.id)||[])].some(other=>other.gameTab===res.gameTab))presence.get(p.id)?.delete(res.gameTab);if(!active(p))presence.delete(p.id);push(r);});return;
  }
  if(u.pathname==='/api/state'){const{r}=auth(req);return json(res,200,snapshot(r));}
  if(u.pathname==='/api/catalog'){const{r}=auth(req);return json(res,200,{forum:forumOrder.map(id=>({id,excerpt:pages[id].body[0].slice(0,90),lastReplyAuthor:pages[id].comments?.at(-1)?.[0]||pages[id].author,...(({title,board,author,date,views,replies,pinned})=>({title,board,author,date,views,replies,pinned}))(pages[id])})),available:Object.entries(pages).filter(([,p])=>readable(r,p)).map(([id,p])=>({id,title:p.title,site:p.site}))});}
@@ -96,7 +97,7 @@ const server=http.createServer(async(req,res)=>{res.setHeader('X-Content-Type-Op
  if(u.pathname==='/api/search'){const{r}=auth(req);const q=clean(u.searchParams.get('q')).toLowerCase().replace(/[\s\-]/g,'');const results=q?Object.entries(pages).filter(([id,p])=>readable(r,p)&&(p.site==='forum'||r.discoveries.some(d=>d.id===id))&&[p.title,p.author,...p.body].join('').toLowerCase().replace(/[\s\-]/g,'').includes(q)).map(([id,p])=>({id,title:p.title,site:p.site,excerpt:p.body[0]})):[];return json(res,200,{results});}
  if(u.pathname==='/api/action'&&req.method==='POST'){const{r,p}=auth(req);const b=await body(req);update(r,p,b);maybeArm(r);schedule(r);if(b.type!=='presence')save();push(r);return json(res,200,{room:snapshot(r)});}
  if(u.pathname.startsWith('/api/'))error('没有这个接口。',404);
- const files={'/':'index.html','/index.html':'index.html','/app.js':'app.js','/pickup.js':'pickup.js','/pickup.css':'pickup.css','/endings.js':'endings.js','/endings.css':'endings.css','/annotator.js':'annotator.js','/sites.js':'sites.js','/style.css':'style.css','/sites.css':'sites.css'};
+ const files={'/':'index.html','/start':'index.html','/index.html':'index.html','/app.js':'app.js','/pickup.js':'pickup.js','/pickup.css':'pickup.css','/endings.js':'endings.js','/endings.css':'endings.css','/annotator.js':'annotator.js','/sites.js':'sites.js','/style.css':'style.css','/sites.css':'sites.css'};
  const routeParts=u.pathname.split('/').filter(Boolean),sitePaths={forum:'forum',workbench:'platform',pickup:'archive',mail:'mail'};
  if(routeParts.length===2&&routeParts[0]==='archive'&&pages[routeParts[1]]&&(pages[routeParts[1]].site==='archive'||['voice','processing','restriction'].includes(routeParts[1]))){res.writeHead(302,{Location:'/'+(pages[routeParts[1]].site==='archive'?'pickup':'workbench')+'/'+routeParts[1]});return res.end();}
  let file=files[u.pathname];if(u.pathname==='/forum'||u.pathname==='/forum/search'||u.pathname==='/mail/received'||(routeParts.length===2&&sitePaths[routeParts[0]]&&pages[routeParts[1]]?.site===sitePaths[routeParts[0]]))file='index.html';if(/^\/assets\/[a-z0-9_-]+\.(svg|png|jpg|webp)$/.test(u.pathname))file=u.pathname.slice(1);
